@@ -73,13 +73,13 @@ function resetGame() {
   board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = "X";
   gameActive = true;
-  statusText.textContent = ""; 
   renderBoard();
+  statusText.textContent = `Player ${currentPlayer}'s Turn`;  // ✅ Show turn immediately
 }
 
 function setMode(selectedMode) {
   mode = selectedMode;
-  resetGame();
+  resetGame(); // ✅ When mode selected, show whose turn
 }
 
 renderBoard();
