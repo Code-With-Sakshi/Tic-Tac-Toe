@@ -1,4 +1,5 @@
 
+
 let board = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X"; 
 let gameActive = false; 
@@ -7,9 +8,10 @@ let mode = "";
 const boardContainer = document.getElementById("board");
 const statusText = document.getElementById("status");
 
-// Hide status at the beginning
+// Hide status initially
 statusText.textContent = "";
 
+// Winning patterns
 const winPatterns = [
   [0,1,2],[3,4,5],[6,7,8],
   [0,3,6],[1,4,7],[2,5,8],
@@ -30,7 +32,7 @@ function renderBoard() {
 
 function makeMove(i) {
   if (!gameActive || board[i] !== "") return;
-  
+
   board[i] = currentPlayer;
   renderBoard();
 
@@ -46,7 +48,7 @@ function makeMove(i) {
     return;
   }
 
-  // Switch turns
+  // Switch turn
   currentPlayer = currentPlayer === "X" ? "O" : "X";
   statusText.textContent = `Player ${currentPlayer}'s Turn`;
 
@@ -55,6 +57,7 @@ function makeMove(i) {
   }
 }
 
+// CPU random move
 function cpuMove() {
   if (!gameActive) return;
 
@@ -65,21 +68,28 @@ function cpuMove() {
   makeMove(move);
 }
 
+// Check winner
 function checkWinner() {
   return winPatterns.some(pattern => pattern.every(i => board[i] === currentPlayer));
 }
 
+// Reset game
 function resetGame() {
+  board = ["", "", "", "", "", "", "", "", ""];
+  currentPlayer = "X"; 
+  gameActive = false;  
+  renderBoard();
+  statusText.textContent = ""; 
+}
+
+// Set game mode and start game
+function setMode(selectedMode) {
+  mode = selectedMode;
   board = ["", "", "", "", "", "", "", "", ""];
   currentPlayer = "X";
   gameActive = true;
   renderBoard();
-  statusText.textContent = `Player ${currentPlayer}'s Turn`;  
-}
-
-function setMode(selectedMode) {
-  mode = selectedMode;
-  resetGame(); 
+  statusText.textContent = `Player ${currentPlayer}'s Turn`;
 }
 
 renderBoard();
